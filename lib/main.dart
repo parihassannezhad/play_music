@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -7,10 +8,24 @@ void main() {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  final AudioPlayer audioPlayer = AudioPlayer();
+  Duration? duration;
+
+  @override
+  void initState() async {
+    await audioPlayer.play(UrlSource('assets/music.mp3'));
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -19,7 +34,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: HomePage(),
+      home: const HomePage(),
     );
   }
 }
@@ -47,6 +62,8 @@ class HomePage extends StatelessWidget {
           ),
         )),
         Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Padding(
               padding: const EdgeInsets.only(right: 16, left: 16, top: 24),
@@ -64,6 +81,7 @@ class HomePage extends StatelessWidget {
                   const Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Text(
                           'Angelina jolie',
@@ -93,74 +111,82 @@ class HomePage extends StatelessWidget {
             const SizedBox(
               height: 40,
             ),
-            Image.asset(
-              'assets/cover.png',
-              width: 304,
-              height: 432,
+            Center(
+              child: Image.asset(
+                'assets/cover.png',
+                width: 304,
+                height: 432,
+              ),
             ),
             const SizedBox(
               height: 15,
             ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text(
-                  'powerFuk fairy living in the Moors',
-                  style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w700,
-                      color: Colors.white),
-                ),
-                const Text(
-                  'Modelfiacent',
-                  style: TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.white),
-                ),
-                Slider(
-                    activeColor: Colors.blue,
-                    value: 0.5,
-                    onChanged: (value) {}),
-                const Padding(
-                  padding: EdgeInsets.only(right: 27,left: 27),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        '8:29',
-                        style: TextStyle(color: Colors.white),
-                      ) ,Text(
-                        '6:39',
-                        style: TextStyle(color: Colors.white),
-                      )
-                    ],
+            const Padding(
+              padding: EdgeInsets.only(left: 54),
+              child: Text(
+                'powerFuk fairy living in the Moors',
+                style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w700,
+                    color: Colors.white),
+              ),
+            ),
+            const Padding(
+              padding: EdgeInsets.only(left: 54),
+              child: Text(
+                'Modelfiacent',
+                style: TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.white),
+              ),
+            ),
+            SizedBox(
+              height: 30,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 24, right: 24),
+              child: Slider(
+                  activeColor: Colors.blue, value: 0.7, onChanged: (value) {}),
+            ),
+            const Padding(
+              padding: EdgeInsets.only(right: 48, left: 48),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    '8:29',
+                    style: TextStyle(color: Colors.white),
                   ),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    IconButton(
-                        onPressed: () {},
-                        icon: const Icon(
-                          CupertinoIcons.backward_end_alt,
-                          color: Colors.white,
-                        )),
-                    IconButton(
-                        onPressed: () {},
-                        icon: const Icon(
-                          CupertinoIcons.play_circle_fill,
-                          size: 60,
-                          color: Colors.white,
-                        )),
-                    IconButton(
-                        onPressed: () {},
-                        icon: const Icon(
-                          CupertinoIcons.forward_end_alt,
-                          color: Colors.white,
-                        )),
-                  ],
-                ),
+                  Text(
+                    '6:39',
+                    style: TextStyle(color: Colors.white),
+                  )
+                ],
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                IconButton(
+                    onPressed: () {},
+                    icon: const Icon(
+                      CupertinoIcons.backward_end_alt,
+                      color: Colors.white,
+                    )),
+                IconButton(
+                    onPressed: () {},
+                    icon: const Icon(
+                      CupertinoIcons.play_circle_fill,
+                      size: 60,
+                      color: Colors.white,
+                    )),
+                IconButton(
+                    onPressed: () {},
+                    icon: const Icon(
+                      CupertinoIcons.forward_end_alt,
+                      color: Colors.white,
+                    )),
               ],
             ),
           ],
